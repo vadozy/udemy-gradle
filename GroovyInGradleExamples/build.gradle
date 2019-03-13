@@ -1,0 +1,48 @@
+println "Hello from Groovy!"
+
+
+import java.text.*;
+
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+System.out.println("Hello from Java " + sdf.format(new Date()));
+
+
+println sayHelloWorld()
+println "Interpolation ${sayHelloWorld()}"
+
+String sayHelloWorld() {
+	println "Hello World 2!"
+	"Yesss " * 3
+}
+
+//Closure
+def c = { it }
+println c("Returned by clusure")
+
+def oneArgMethod(closure) {
+	closure() * 2
+}
+println oneArgMethod {10}
+
+
+// Closure resolution
+class Person {
+	String theName
+	Integer theAge
+	
+	Person(theName, theAge) {
+		this.theName = theName
+		this.theAge = theAge
+	}
+	
+	def executeInside(Closure c) {
+		c.delegate = this
+		c()
+	}
+}
+
+def p1 = new Person("Vadim", 50)
+p1.executeInside {
+	println theName
+}
